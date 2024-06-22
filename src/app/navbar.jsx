@@ -36,7 +36,7 @@ export default function Navbar(){
                     {/* Menu Navigator */}
                     <ul className="hidden md:flex space-x-4">
                         <li><Link href="/">Home</Link></li>
-                        <li><Link href="/login">About</Link></li>
+                        <li><Link href="#">About</Link></li>
                         <li><a href="#">Team</a></li>
                         <li><a href="#">Contact</a></li>
                     </ul>
@@ -58,7 +58,7 @@ export default function Navbar(){
                                 <path d="M23.853 0C17.2934 0 11.9265 5.36693 11.9265 11.9265C11.9265 18.1283 8.82562 23.7338 3.93575 27.7888C1.49081 29.8163 0 32.6786 0 35.7795H47.7061C47.7061 32.6786 46.2749 29.8163 43.7703 27.7888C38.8804 23.7338 35.7795 18.1283 35.7795 11.9265C35.7795 5.36693 30.4722 0 23.853 0ZM17.8898 41.7428C17.8898 45.0226 20.5732 47.7061 23.853 47.7061C27.1328 47.7061 29.8163 45.0226 29.8163 41.7428H17.8898Z" fill="white"/>
                             </svg>
                         </button>
-                        <img class="w-10 h-10 rounded-full" src="/pla2.png" alt="Rounded avatar" />
+                        <Link href="/login"><img class="rounded-full" src="/pla2.png" alt="Rounded avatar" /></Link>
                     </div>
                 </div>
 
