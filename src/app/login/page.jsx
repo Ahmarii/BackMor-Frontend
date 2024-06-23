@@ -54,8 +54,8 @@ export default function Login(){
                 
                 </form>
 
-                {/* google sign button */}
-                <div className="z-10 w-full max-w-60 flex flex-col">
+                {/* Google and Facebook Sign Button */}
+                <div className="z-10 w-2/3 max-w-60 flex flex-col">
 
                     <button className="w-full p-2 bg-gray-200 inline-flex items-center justify-center rounded-md border-solid border-2 border-gray-600" type="button">
                         <svg className="size-6 mr-1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 48 48">
