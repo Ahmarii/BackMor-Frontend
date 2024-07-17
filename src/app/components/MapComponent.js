@@ -50,8 +50,9 @@ export default function MapComponent() {
                 "Data © <a href='http://www.openstreetmap.org/copyright'>CPRE888</a>"
             }));
             
-
+            console.log(45456466465)
         })
+
         .catch(error => {
           console.error('Error fetching metadata:', error);
         });
@@ -68,22 +69,27 @@ export default function MapComponent() {
     };
   }, []);
 
-    socket.on('initialMarkers', (initialMarkersData) => {
-        //console.log(213123123123123,Object.entries(initialMarkersData))
-        updateMarkersOnMap(Object.entries(initialMarkersData));
-    });
+    useEffect(() => {
+        if (mapInstance) {
+            socket.on('initialMarkers', (initialMarkersData) => {
+                //console.log(213123123123123,Object.entries(initialMarkersData))
+                updateMarkersOnMap(Object.entries(initialMarkersData));
+            });
 
-    socket.on('updatedMarkers', (updatedMarkers) => {
-        updateMarkersOnMap(Object.entries(updatedMarkers));
-        });
+            socket.on('updatedMarkers', (updatedMarkers) => {
+                updateMarkersOnMap(Object.entries(updatedMarkers));
+                });
+        }
+    },[mapInstance])
 
     const updateMarkersOnMap = (data) => {
         local_markers.current.forEach(marker => {
             //console.log(local_markers.current)
             marker.remove();
-            //local_markers.current.pop()
         });
-
+        while (local_markers.current.length > 0) {
+            local_markers.current.pop();
+        }
         //console.log(123123213,data)
         data.forEach(markerData => {
             const newMarker = new localMarker({draggable: true},markerData[0])
@@ -95,7 +101,6 @@ export default function MapComponent() {
         });
     }
 
-
     // Function to add marker to the map
     const addMarkerToMap = (lngLat) => {
         if (mapInstance) {
@@ -105,18 +110,16 @@ export default function MapComponent() {
                 .addTo(mapInstance.current)
                 .on('dragend', onMarkerDragEnd);
             local_markers.current.push(marker)
-            //console.log(local_markers)
 
-            
             const newRemoteMarker = {'id':Id,'geo':marker.getLngLat()}
-            socket.emit('addMarker', newRemoteMarker)
+            socket.emit('updateMarker', newRemoteMarker)
         }
     };
 
     const logMarkers = () => {
-        console.log(21531515315,local_markers)
+        console.log(window.inviteCode)
         local_markers.current.forEach((marker, index) => {
-        //console.log(`Marker ${marker.id}:`, marker.getLngLat());
+            console.log(`Marker ${marker.id}:`, marker.getLngLat());
         });
     };
 
@@ -127,7 +130,7 @@ export default function MapComponent() {
         socket.emit('updateMarker', {'id':Id,'geo':lngLat})
     };
 
-    // Expose addMarkerToMap function
+    // Expose function
     useEffect(() => {
         if (typeof window !== 'undefined') {
         window.addMarkerToMap = addMarkerToMap;
@@ -137,23 +140,3 @@ export default function MapComponent() {
 
     return <div id="map" ref={mapContainer} className="w-full h-screen" />;
 }
-
-    // Listen for updated markers from server
-    /*
-    socket.on('updatedMarkers', (updatedMarkers) => {
-        markers.current = updatedMarkers;
-        updateMarkersOnMap();
-        });
-
-    // Fetch initial markers from server
-    socket.on('initialMarkers', (initialMarkers) => {
-        markers.current = initialMarkers;
-        updateMarkersOnMap();
-    });
-
-    const updateMarkersOnMap = () => {
-        markers.current.forEach(marker => {
-        
-        });
-        };
-    */
